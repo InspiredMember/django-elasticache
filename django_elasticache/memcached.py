@@ -24,7 +24,7 @@ def invalidate_cache_after_error(f):
         try:
             return f(self, *args, **kwds)
         except (pylibmc.ConnectionError, pylibmc.ServerDown) as mc_e:
-            logger.exception(f'Server error from libmemcached, will clear cluster nodes and try again: {mc_e}')
+            logger.info(f'Server error from libmemcached, will clear cluster nodes and try again: {mc_e}')
             self.clear_cluster_nodes_cache()
             try:
                 return f(self, *args, **kwds)
